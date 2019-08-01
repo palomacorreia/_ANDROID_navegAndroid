@@ -1,11 +1,12 @@
 package syssatelite.navegandroid;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,11 +32,12 @@ public class MainActivity extends AppCompatActivity {
                 //newGame();
                 return true;
             case R.id.localizar:
-                //showHelp();
+                Intent intent2 = new Intent(MainActivity.this, mapa.class);
+                startActivity(intent2);
                 return true;
             case R.id.sobre:
-                Intent intent = new Intent(MainActivity.this, telaSobre.class);
-                startActivity(intent);
+                Intent intent3 = new Intent(MainActivity.this, telaSobre.class);
+                startActivity(intent3);
                 return true;
             default:
                 return true;
