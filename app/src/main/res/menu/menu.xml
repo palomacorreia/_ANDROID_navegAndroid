@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menuProgress"
+        android:showAsAction="always" />
+    <!--<item android:id="@+id/menuNewBuzz"-->
+        <!--android:icon="@android:drawable/ic_input_add"-->
+        <!--android:title="@string/localizar"-->
+        <!--android:alphabeticShortcut="n"-->
+        <!--android:showAsAction="ifRoom|withText" />-->
+    <item android:id="@+id/configurar"
+        android:icon="@android:drawable/ic_lock_lock"
+        android:title="@string/configurar"
+        android:alphabeticShortcut="a"
+        android:showAsAction="withText" />
+    <item
+        android:id="@+id/localizar"
+        android:alphabeticShortcut="s"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:showAsAction="withText"
+        android:title="@string/localizar" />
+    <item android:id="@+id/sobre"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/sobre"
+        android:alphabeticShortcut="b"
+        android:showAsAction="withText" />
+</menu>
