@@ -2,6 +2,12 @@
     <string name="app_name">Sistema de Navegacao</string>
     <string name="localizar">Localizar</string>
     <string name="configurar">Configurar</string>
+    <string name="sat">Satélite</string>
     <string name="sobre">Sobre</string>
     <string name="title_activity_mapa">Map</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="altitude">Altitude</string>
+    <string name="city">Present Location</string>
+    <string name="no_text"> </string>
 </resources>
