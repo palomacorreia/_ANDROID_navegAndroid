@@ -4,6 +4,17 @@
     <string name="configurar">Configurar</string>
     <string name="sat">Satélite</string>
     <string name="sobre">Sobre</string>
+    <string name="vetorial">Vetorial</string>
+    <string name="ImagemSatelite">Imagem Satelite</string>
+    <string name="graudecimal">Grau Decimal</string>
+    <string name="grauminuto">Grau-Minuto Decimal</string>
+    <string name="grauminutodsegundo">Grau-Minuto-Segundo Decimal</string>
+    <string name="km">Km/h</string>
+    <string name="mph">Mph</string>
+    <string name="nenhuma">Nenhuma</string>
+    <string name="north">North Up</string>
+    <string name="course">Course Up</string>
+    <string name="trafego">Informações de Tráfego</string>
     <string name="title_activity_mapa">Map</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
