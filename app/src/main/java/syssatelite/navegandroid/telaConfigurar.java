@@ -35,7 +35,7 @@ public class telaConfigurar extends AppCompatActivity {
                 if (checked)
                     Log.d("myTag", "Nothing");
                     break;
-            case R.id.norht:
+            case R.id.north:
                 if (checked)
                     Log.d("myTag", "North");
                     break;
