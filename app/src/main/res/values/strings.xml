@@ -10,4 +10,23 @@
     <string name="altitude">Altitude</string>
     <string name="city">Present Location</string>
     <string name="no_text"> </string>
+    <string name="grauDecimal">Grau Decimal</string>
+    <string name="grauMinuto"> Grau-Minuto Decimal</string>
+    <string name="grauSegundo"> Grau-Minuto-Segundo Decimal</string>
+    <string name="radiobutton">RadioButton</string>
+    <string name="formato">Formato de apresentação:</string>
+    <string name="trafego">Informações de trafégo:</string>
+    <string name="km">Km/h</string>
+    <string name="mph">Mph</string>
+    <string name="unidade">Unidade de apresentação:</string>
+    <string name="orientacao">Orientação do mapa:</string>
+    <string name="nenhuma">Nenhuma</string>
+    <string name="north">North Up</string>
+    <string name="course">Course Up</string>
+    <string name="tipo">Tipo do Mapa:</string>
+    <string name="vetorial">Vetrorial</string>
+    <string name="imagem">Imagem de Satélite</string>
+    <string name="todo">TODO</string>
+    <string name="imagemtela">TODO</string>
+    <string name="botao">Salvar Configurarações</string>
 </resources>

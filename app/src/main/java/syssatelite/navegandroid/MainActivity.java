@@ -29,19 +29,20 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.configurar:
-                //newGame();
+                Intent config = new Intent(MainActivity.this, Configurar.class);
+                startActivity(config);
                 return true;
             case R.id.localizar:
-                Intent intent2 = new Intent(MainActivity.this, mapa.class);
-                startActivity(intent2);
+                Intent mapa = new Intent(MainActivity.this, mapa.class);
+                startActivity(mapa);
                 return true;
             case R.id.sat:
                 Intent gnss = new Intent(MainActivity.this, TelaGNSS.class);
                 startActivity(gnss);
                 return true;
             case R.id.sobre:
-                Intent intent3 = new Intent(MainActivity.this, telaSobre.class);
-                startActivity(intent3);
+                Intent sobre = new Intent(MainActivity.this, telaSobre.class);
+                startActivity(sobre);
                 return true;
             default:
                 return true;
