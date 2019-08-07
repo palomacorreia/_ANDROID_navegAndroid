@@ -150,7 +150,8 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
                 Iterable<GpsSatellite> sats = gpsStatus.getSatellites();
                 for (GpsSatellite sat : sats) {
                     // processe as informações de cada satélite
-                    coords+=sat.getPrn()+";"+sat.getAzimuth()+";"+sat.getElevation()+";"
+                    coords+=
+                            sat.getPrn()+";"+sat.getAzimuth()+";"+sat.getElevation()+";"
                             +sat.getSnr()+";"+sat.usedInFix()+"\n";
                 }
             }
