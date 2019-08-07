@@ -22,14 +22,20 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
     private String lat;
     private String lon;
     private String alt;
+    private String gnsstext=">";
+    private String SNRtext=">";
+    private String ELEVtext=">";
+    private String AZIMtext=">";
     private TextView latitudePosition;
     private TextView longitudePosition;
     private TextView altitudePosition;
-    private TextView currentCity;
+    private TextView GNSS;
+    private TextView SNR;
+    private TextView  ELEV;
+    private TextView AZIM;
     private LocationManager locationManager;// O Gerente de localização
     private LocationProvider locProvider; // Provedor de localização
-    private String coords="Coordenadas GNSS";
-    private TextView gnsstext;
+
     private final int REQUEST_LOCATION = 2;
 
 
@@ -41,7 +47,10 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         latitudePosition = (TextView) findViewById(R.id.latitude);
         longitudePosition = (TextView) findViewById(R.id.longitude);
         altitudePosition = (TextView) findViewById(R.id.altitude);
-        gnsstext = (TextView) findViewById(R.id.city);
+        GNSS= (TextView) findViewById(R.id.gnss);
+        SNR=(TextView)findViewById(R.id.snr);
+        ELEV =(TextView)findViewById(R.id.elev);
+        AZIM=(TextView)findViewById(R.id.azimute);
         locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
     }
 
@@ -149,16 +158,21 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
             if (gpsStatus!=null) {
                 Iterable<GpsSatellite> sats = gpsStatus.getSatellites();
                 for (GpsSatellite sat : sats) {
-                    // processe as informações de cada satélite
-                    coords+=
-                            sat.getPrn()+";"+sat.getAzimuth()+";"+sat.getElevation()+";"
-                            +sat.getSnr()+";"+sat.usedInFix()+"\n";
+                     //processe as informações de cada satélite
+                            gnsstext+= ""+sat.getPrn();
+                            SNRtext+= ""+sat.getSnr();
+                            ELEVtext+= ""+sat.getElevation();
+                            AZIMtext+=" "+sat.getAzimuth();
+                          //  sat.usedInFix();  //DIFERENCIA OS SATELITES
                 }
             }
         } catch (SecurityException e) {
             e.printStackTrace();
         }
-             gnsstext.setText(coords);
+                GNSS.setText(gnsstext);
+                SNR.setText(SNRtext);
+                ELEV.setText(ELEVtext);
+                AZIM.setText(AZIMtext);
     }
 
 }
