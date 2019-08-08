@@ -31,6 +31,7 @@
         android:gravity="end">
 
         <Switch
+            android:id="@+id/trafego"
             android:layout_width="246dp"
             android:layout_height="46dp"
             android:text="@string/trafego"
@@ -104,17 +105,22 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <RadioButton
-        android:id="@+id/km"
-        android:layout_width="match_parent"
-        android:layout_height="22dp"
-        android:text="@string/km" />
+    <RadioGroup
+        android:id="@+id/unidadeGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/km"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:text="@string/km" />
 
-    <RadioButton
-        android:id="@+id/mph"
-        android:layout_width="match_parent"
-        android:layout_height="22dp"
-        android:text="@string/mph" />
+        <RadioButton
+            android:id="@+id/mph"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:text="@string/mph" />
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -136,23 +142,28 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <RadioButton
-        android:id="@+id/nenhuma"
-        android:layout_width="match_parent"
-        android:layout_height="23dp"
-        android:text="@string/nenhuma" />
+    <RadioGroup
+        android:id="@+id/orientacaoGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/nenhuma"
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:text="@string/nenhuma" />
 
-    <RadioButton
-        android:id="@+id/north"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:text="@string/north" />
+        <RadioButton
+            android:id="@+id/north"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="@string/north" />
 
-    <RadioButton
-        android:id="@+id/course"
-        android:layout_width="match_parent"
-        android:layout_height="21dp"
-        android:text="@string/course" />
+        <RadioButton
+            android:id="@+id/course"
+            android:layout_width="match_parent"
+            android:layout_height="21dp"
+            android:text="@string/course" />
+    </RadioGroup>
 
 
     <LinearLayout
@@ -175,17 +186,23 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <RadioButton
-        android:id="@+id/vetorial"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/vetorial" />
+    <RadioGroup
+        android:id="@+id/tipoGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/vetorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vetorial" />
 
-    <RadioButton
-        android:id="@+id/imagem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/imagem" />
+        <RadioButton
+            android:id="@+id/imagem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/imagem" />
+    </RadioGroup>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

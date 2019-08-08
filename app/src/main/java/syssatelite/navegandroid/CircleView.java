@@ -9,19 +9,15 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-
-
-public class CustomView extends View {
-
-
+public class CircleView extends View {
     private int circleColor;  // cor do círculo
     private int textColor;    // cor do texto
     private String text;      // texto
 
     // construtor
-    public CustomView(Context context, @Nullable AttributeSet attrs) {
+    public CircleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.custom_attributes, 0, 0);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs,R.styleable.custom_attributes, 0, 0);
         try {
             //get the text and colors specified using the names in attrs.xml
             text = a.getString(R.styleable.custom_attributes_circleView_text);
@@ -31,8 +27,6 @@ public class CustomView extends View {
             a.recycle();
         }
     }
-
-
     @Override
     protected void onDraw(Canvas canvas) {
         Paint paint=new Paint();
