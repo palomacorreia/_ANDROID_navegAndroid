@@ -3,7 +3,9 @@ package syssatelite.navegandroid;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -13,8 +15,10 @@ public class CircleView extends View {
     private int circleColor;  // cor do círculo
     private int textColor;    // cor do texto
     private String text;      // texto
-
+    private Rect rectangle;
+    private Paint paint;
     // construtor
+
     public CircleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs,R.styleable.custom_attributes, 0, 0);
@@ -23,26 +27,51 @@ public class CircleView extends View {
             text = a.getString(R.styleable.custom_attributes_circleView_text);
             textColor = a.getInteger(R.styleable.custom_attributes_circleView_textColor, 0);
             circleColor = a.getInteger(R.styleable.custom_attributes_circleView_circleColor, 0);
+
+
+            int x = 50;
+            int y = 50;
+            int sideLength = 200;
+
+            // create a rectangle that we'll draw later
+            rectangle = new Rect(x, y, sideLength, sideLength);
+
+            // create the Paint and set its color
+            paint = new Paint();
+            paint.setColor(Color.GRAY);
         } finally {
             a.recycle();
         }
+
     }
+
+
+
+
     @Override
     protected void onDraw(Canvas canvas) {
         Paint paint=new Paint();
-        int viewWidthHalf = this.getMeasuredWidth()/2;
-        int viewHeightHalf = this.getMeasuredHeight()/2;
-        int radius = 0;
-        if(viewWidthHalf>viewHeightHalf)
-            radius=viewHeightHalf-10;
-        else
-            radius=viewWidthHalf-10;
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(circleColor);
-        canvas.drawCircle(viewWidthHalf, viewHeightHalf, radius, paint);
-        paint.setColor(textColor);
-        paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(50);
-        canvas.drawText(text, viewWidthHalf, viewHeightHalf, paint);
+
+
+        super.onDraw(canvas);
+
+        int x = getWidth();
+        int y = getHeight();
+        int radius;
+        radius = 200;
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.WHITE);
+        canvas.drawPaint(paint);
+        // Use Color.parseColor to define HTML colors
+        paint.setColor(Color.parseColor("#CD5C5C"));
+        canvas.drawCircle(x / 2, y / 2, radius, paint);
+        canvas.drawCircle(x / 2, y / 2, radius/2, paint);
+        canvas.drawCircle(x / 2, y / 2, radius/6, paint);
+
     }
+
+    public void setSatInfo(String sate[]) {
+
+    }
+
 }
