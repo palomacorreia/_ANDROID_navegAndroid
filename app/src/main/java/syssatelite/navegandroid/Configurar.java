@@ -23,25 +23,6 @@ public class Configurar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configurar);
 
-//        if(sharedPreferences.getString("grauDecimal","").equals("") || sharedPreferences.getString("grauMinuto","").equals("")|| sharedPreferences.getString("grauSegundo","").equals(""))
-//        {
-//            /*Se não estiver sido criado o banco, ele é criado agora para evitar que os dados sejam apagados*/
-//            SharedPreferences sharedPreferences1 = getSharedPreferences("configuracoes",0);
-//
-//        }
-//        //recuperamos a senha e o login
-//        senha_armazenada = (prefs1.getString ("senha", ""));
-//        login_armazanado = (prefs1.getString ("login", ""));
-//
-//        if(senha_armazenada.equals("") && login_armazanado.equals(""))
-//        {
-//            //armazena os valores senha e login para serem inseridos no arquivo xml
-//            edUser.putString("senha", "admin");
-//            edUser.putString("login", "admin");
-//            //armazenamos a senha e o login com admin no banco
-//            edUser.apply();
-//        }
-
         final Button botaoSalvar = findViewById(R.id.salvar);
         final Switch escolha = (Switch)findViewById(R.id.trafego);
 
@@ -124,8 +105,7 @@ public class Configurar extends AppCompatActivity {
                 editor.apply();
             }
         });
-        Toast.makeText(this, "Configurações gravadas com sucesso!", Toast.LENGTH_SHORT).show();
-        finish();
+
     }
 
 }

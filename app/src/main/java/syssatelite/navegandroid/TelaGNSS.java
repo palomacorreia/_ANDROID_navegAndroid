@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -35,6 +37,7 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
     private TextView AZIM;
     private LocationManager locationManager;// O Gerente de localização
     private LocationProvider locProvider; // Provedor de localização
+    private CircleView myview;
 
     private final int REQUEST_LOCATION = 2;
 
@@ -50,8 +53,9 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         GNSS= (TextView) findViewById(R.id.gnss);
         SNR=(TextView)findViewById(R.id.snr);
         ELEV =(TextView)findViewById(R.id.elev);
-        AZIM=(TextView)findViewById(R.id.azimute);
+        //AZIM=(TextView)findViewById(R.id.azimute);
         locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
+        myview=(CircleView)findViewById(R.id.ciurculoviewid);
     }
 
 
@@ -158,13 +162,26 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
             if (gpsStatus!=null) {
                 Iterable<GpsSatellite> sats = gpsStatus.getSatellites();
                 for (GpsSatellite sat : sats) {
-                     //processe as informações de cada satélite
-                            gnsstext+= ""+sat.getPrn();
-                            SNRtext+= ""+sat.getSnr();
-                            ELEVtext+= ""+sat.getElevation();
-                            AZIMtext+=" "+sat.getAzimuth();
-                          //  sat.usedInFix();  //DIFERENCIA OS SATELITES
+//                     //processe as informações de cada satélite
+//                            gnsstext+= ""+sat.getPrn();
+//                            SNRtext+= ""+sat.getSnr();
+//                            ELEVtext+= ""+sat.getElevation();
+//                            AZIMtext+=" "+sat.getAzimuth();
+//                            sat.usedInFix();  //DIFERENCIA OS SATELITES
+                            //myview.setSatInfo();
+                    String lSatellites = "Satellite "
+                            + sat.getPrn() + ","
+                            + sat.usedInFix() + ","
+                            + sat.getSnr() + ","
+                            + sat.getAzimuth() + ","
+                            + sat.getElevation()
+                            + sat.usedInFix() + "\n\n";
+
+                    ArrayList <String> sate = new ArrayList();
+                    sate.add(lSatellites);
+
                 }
+                myview.setSatInfo(sate);
             }
         } catch (SecurityException e) {
             e.printStackTrace();
@@ -172,7 +189,7 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
                 GNSS.setText(gnsstext);
                 SNR.setText(SNRtext);
                 ELEV.setText(ELEVtext);
-                AZIM.setText(AZIMtext);
+               // AZIM.setText(AZIMtext);
     }
 
 }

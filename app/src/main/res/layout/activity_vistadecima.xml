@@ -8,16 +8,57 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <syssatelite.navegandroid.CircleView
+    <syssatelite.navegandroid.Rectangle
 
-        android:layout_width="328dp"
-        android:layout_height="359dp"
+        android:layout_width="114dp"
+        android:layout_height="169dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         custom:circleView_circleColor="#01A9DB"
-        custom:circleView_text="TERRA"
+        custom:circleView_textColor="#BBB" />
+
+    <syssatelite.navegandroid.Rectangle
+
+        android:layout_width="114dp"
+        android:layout_height="169dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        custom:circleView_circleColor="#4169E1"
+        custom:circleView_textColor="#BBB" />
+
+    <syssatelite.navegandroid.Rectangle
+
+        android:layout_width="114dp"
+        android:layout_height="169dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.946"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        custom:circleView_circleColor="#4169E1"
+        custom:circleView_textColor="#BBB" />
+
+    <syssatelite.navegandroid.CircleView
+
+        android:id="@+id/ciurculoviewid"
+        android:layout_width="366dp"
+        android:layout_height="424dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.924"
+        custom:circleView_circleColor="#4169E1"
         custom:circleView_textColor="#BBB" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
