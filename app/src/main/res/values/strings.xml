@@ -32,5 +32,12 @@
     <string name="imagem">Imagem de Satélite</string>
     <string name="todo">TODO</string>
     <string name="imagemtela">TODO</string>
-    <string name="botao">Salvar Configurarações</string>
+    <string name="botao">Salvar Configurações</string>
+    <string name="gnss_title">GNSS</string>
+    <string name="snr_title">SNR</string>
+    <string name="elev_title">ELEV</string>
+    <string name="azim_title">AZIM</string>
+    <string name="ceu">Céu</string>
+
+    snr_title
 </resources>

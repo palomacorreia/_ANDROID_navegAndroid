@@ -20,34 +20,53 @@ public class Configurar extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configurar);
 
-        Context context = this;
-        SharedPreferences sharedPreferences = context.getSharedPreferences("configuracoes", 0);
 //        if(sharedPreferences.getString("grauDecimal","").equals("") || sharedPreferences.getString("grauMinuto","").equals("")|| sharedPreferences.getString("grauSegundo","").equals(""))
 //        {
 //            /*Se não estiver sido criado o banco, ele é criado agora para evitar que os dados sejam apagados*/
 //            SharedPreferences sharedPreferences1 = getSharedPreferences("configuracoes",0);
 //
 //        }
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
+//        //recuperamos a senha e o login
+//        senha_armazenada = (prefs1.getString ("senha", ""));
+//        login_armazanado = (prefs1.getString ("login", ""));
+//
+//        if(senha_armazenada.equals("") && login_armazanado.equals(""))
+//        {
+//            //armazena os valores senha e login para serem inseridos no arquivo xml
+//            edUser.putString("senha", "admin");
+//            edUser.putString("login", "admin");
+//            //armazenamos a senha e o login com admin no banco
+//            edUser.apply();
+//        }
+
         final Button botaoSalvar = findViewById(R.id.salvar);
+
          botaoSalvar.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
+                 System.out.println("sou bonito");
+                 //shared para o usuario
+                 SharedPreferences prefs1 = getSharedPreferences("configuracoes", Context.MODE_PRIVATE);
+                 SharedPreferences.Editor  editor = prefs1.edit ();
 
                  RadioGroup formatoGroup = (RadioGroup)findViewById(R.id.formatoGroup);
                  switch (formatoGroup.getCheckedRadioButtonId())
                  {
                      case R.id.grauDecimal:
-                         editor.putInt("grauDecimal",1);
+                         //armazena os valores
+                         System.out.println("sou bonito");
+                         editor.putString("grau" , "Decimal");
                          break;
                      case R.id.grauMinuto:
-                         editor.putInt("grauMinuto",1);
+                         editor.putString("grau","Minuto");
                          break;
                      case R.id.grauSegundo:
-                         editor.putInt("grauSegundo",1);
+                         editor.putString("grau","Segundo");
                          break;
                  }
-                editor.apply();
+
+                 //Amazena os valores
+                 editor.apply();
              }
          });
     }
