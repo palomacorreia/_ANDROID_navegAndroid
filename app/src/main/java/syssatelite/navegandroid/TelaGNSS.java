@@ -13,8 +13,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -37,8 +35,6 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
     private TextView AZIM;
     private LocationManager locationManager;// O Gerente de localização
     private LocationProvider locProvider; // Provedor de localização
-    private CircleView myview;
-    private Satelite objSatelite;
 
     private final int REQUEST_LOCATION = 2;
 
@@ -47,7 +43,15 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vistadecima);
-//        myview=(CircleView)findViewById(R.id.ciurculoviewid);
+
+        latitudePosition = (TextView) findViewById(R.id.latitude);
+        longitudePosition = (TextView) findViewById(R.id.longitude);
+        altitudePosition = (TextView) findViewById(R.id.altitude);
+        GNSS= (TextView) findViewById(R.id.gnss);
+        SNR=(TextView)findViewById(R.id.snr);
+        ELEV =(TextView)findViewById(R.id.elev);
+        //AZIM=(TextView)findViewById(R.id.azimute);
+        locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
     }
 
 
@@ -56,12 +60,16 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         super.onResume();
         //Permissão do Usuário
         if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                // A permissão foi dada
-                ativaGPS();
+                Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) {
+            // A permissão foi dada
+            ativaGPS();
         } else {
             // Solicite a permissão
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_LOCATION);
+
         }
     }
 
@@ -74,13 +82,13 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_LOCATION) {
-           if (grantResults.length == 1 && grantResults[0] ==
+            if (grantResults.length == 1 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED) {
                 // O usuário acabou de dar a permissão
                 ativaGPS();
             } else {
                 // O usuário não deu a permissão solicitada
-                Toast.makeText(this, "Sua localização não será mostrada!S", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Sua localização não será mostrada", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -91,9 +99,7 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
             locProvider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
             locationManager.requestLocationUpdates(locProvider.getName(), 30000, 1, this);
             locationManager.addGpsStatusListener(this);
-
-        } catch (SecurityException e)
-        {
+        } catch (SecurityException e) {
             e.printStackTrace();
         }
     }
@@ -102,9 +108,7 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         try {
             locationManager.removeUpdates(this);
             locationManager.removeGpsStatusListener(this);
-
-        } catch (SecurityException e)
-        {
+        } catch (SecurityException e) {
             e.printStackTrace();
         }
     }
@@ -112,18 +116,17 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
 
     @Override
     public void onLocationChanged(Location location) {
-        if(location!= null){
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-            double altitude = location.getAltitude();
-            lat = (Location.convert(latitude, Location.FORMAT_SECONDS));
-            latitudePosition.setText(lat);
-            lon = (Location.convert(longitude, Location.FORMAT_SECONDS));
-            longitudePosition.setText(lon);
-            alt=(Location.convert(longitude, Location.FORMAT_SECONDS));
-            altitudePosition.setText(alt);
-            Toast.makeText(TelaGNSS.this, "latitude:" + latitude + " longitude:" + longitude, Toast.LENGTH_SHORT).show();
-        }
+        // Aqui a nova localização
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+        double altitude =location.getAltitude();
+
+        lat = (Location.convert(latitude, Location.FORMAT_SECONDS));
+        //latitudePosition.setText(lat);
+        lon = (Location.convert(longitude, Location.FORMAT_SECONDS));
+        //longitudePosition.setText(lon);
+        alt=(Location.convert(longitude, Location.FORMAT_SECONDS));
+        //altitudePosition.setText(alt);
 
 
     }
@@ -155,33 +158,21 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
             if (gpsStatus!=null) {
                 Iterable<GpsSatellite> sats = gpsStatus.getSatellites();
                 for (GpsSatellite sat : sats) {
-//                     //processe as informações de cada satélite
-//                            gnsstext+= ""+sat.getPrn();
-//                            SNRtext+= ""+sat.getSnr();
-//                            ELEVtext+= ""+sat.getElevation();
-//                            AZIMtext+=" "+sat.getAzimuth();
-//                            sat.usedInFix();  //DIFERENCIA OS SATELITES
-                            //myview.setSatInfo();
-//                    ArrayList <Sat> sate = new ArrayList();
-//                    sate.add();
-//                    objSatelite.setGNSS(sat.getPrn());
-//                    objSatelite.setSNR(sat.getSnr());
-//                    objSatelite.setELEV(sat.getElevation());
-//                    objSatelite.setAZIM(sat.getAzimuth());
-//                    objSatelite.setTIPOSAT(sat.usedInFix());
-//
-//                    System.out.println("Info:"+ objSatelite);
-
+                    //processe as informações de cada satélite
+                    gnsstext+= ""+sat.getPrn();
+                    SNRtext+= ""+sat.getSnr();
+                    ELEVtext+= ""+sat.getElevation();
+                    AZIMtext+=" "+sat.getAzimuth();
+                    //  sat.usedInFix();  //DIFERENCIA OS SATELITES
                 }
-                //myview.setSatInfo(sate);
             }
         } catch (SecurityException e) {
             e.printStackTrace();
         }
-                GNSS.setText(gnsstext);
-                SNR.setText(SNRtext);
-                ELEV.setText(ELEVtext);
-               // AZIM.setText(AZIMtext);
+//        GNSS.setText(gnsstext);
+//        SNR.setText(SNRtext);
+//        ELEV.setText(ELEVtext);
+//        AZIM.setText(AZIMtext);
     }
 
 }
