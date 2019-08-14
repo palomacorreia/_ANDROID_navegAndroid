@@ -20,11 +20,8 @@ public class CircleView extends View {
     private String text;      // texto
     private Rect rectangle;
     private Paint paint;
-    public Satelite Sat;
-    public float Xcc, Ycc;
-
-
     // construtor
+
     public CircleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs,R.styleable.custom_attributes, 0, 0);
@@ -42,64 +39,33 @@ public class CircleView extends View {
 
 
 
-    public void SatInfo(Satelite arraySat)
-    {
-        //System.out.println("Tamnaho!"+ tamanho);
-        float Xc, Yc, Xs, Ys;
-        int radius = 5, i =0;
-        int W = this.getMeasuredHeight();
-        int H = this.getMeasuredHeight();
-        Paint paint = new Paint();
-        Canvas canvas =  new Canvas();
 
-        Xs = (float) (radius * Math.cos((arraySat.getELEV()) * Math.sin(arraySat.getAZIM())));
-        Ys = (float) (radius * Math.cos((arraySat.getELEV()) * Math.cos(arraySat.getAZIM()) ));
-
-        Xc = Xs + W / 2;
-        Yc = -Ys + H / 2;
-
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.BLUE);
-
-        canvas.drawPaint(paint);
-        // Use Color.parseColor to define HTML colors
-        paint.setColor(Color.parseColor("#5ccd5c"));
-
-        //canvas.drawCircle( Xc, (float)Yc, radius, paint);
-        System.out.println("DESENHEI O SATELITE MEU AMOR!");
-        Xcc = Xc;
-        Ycc = Yc;
-        System.out.println("Xcc" + Xcc);
-        System.out.println("Ycc" + Ycc);
-    }
-
-
+    @Override
     protected void onDraw(Canvas canvas) {
         Paint paint=new Paint();
 
 
         super.onDraw(canvas);
 
-        int x = getMeasuredWidth();
-        int y = getMeasuredHeight();
+        int x = getWidth();
+        int y = getHeight();
         int radius;
-        radius = 50;
+        radius = 100;
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.WHITE);
         canvas.drawPaint(paint);
-        // Use Color
-        // .parseColor to define HTML colors
-        paint.setColor(Color.parseColor("#000000"));
+        // Use Color.parseColor to define HTML colors
+        paint.setColor(Color.parseColor("#CD5C5C"));
         canvas.drawCircle(x / 2, y / 2, radius, paint);
         canvas.drawCircle(x / 2, y / 2, radius*2, paint);
-        canvas.drawCircle(x / 2, y / 2, radius*4, paint);
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.WHITE);
-        paint.setColor(Color.parseColor("#5ccd5c"));
+        canvas.drawCircle(x / 2, y / 2, radius/6, paint);
 
-        canvas.drawCircle(Xcc, Ycc, 20, paint);
     }
 
+    public void setSatInfo(ArrayList<Satelite> arraySatelite)
+    {
+        System.out.println("Arrayzinho:" + arraySatelite.get(1));
 
+    }
 
 }
