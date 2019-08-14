@@ -6,14 +6,16 @@ public class Satelite {
     private int latitudePosition;
     private int longitudePosition;
     private int altitudePosition;
-    private float GNSS;
-    private float SNR;
-    private float ELEV;
-    private float AZIM;
+    private double GNSS;
+    private double SNR;
+    private double ELEV;
+    private double AZIM;
     private boolean TIPOSAT;
 
+    public Satelite() {
+    }
 
-    public Satelite(float GNSS, float SNR, float ELEV, float AZIM, boolean TIPOSAT) {
+    public Satelite(double GNSS, double SNR, double ELEV, double AZIM, boolean TIPOSAT) {
         this.GNSS = GNSS;
         this.SNR = SNR;
         this.ELEV = ELEV;
@@ -21,43 +23,43 @@ public class Satelite {
         this.TIPOSAT = TIPOSAT;
     }
 
-    public float getGNSS() {
+    public double getGNSS() {
         return GNSS;
     }
 
-    public void setGNSS(float GNSS) {
+    public void setGNSS(double GNSS) {
         this.GNSS = GNSS;
     }
 
-    public float getSNR() {
+    public double getSNR() {
         return SNR;
     }
 
-    public void setSNR(float SNR) {
+    public void setSNR(double SNR) {
         this.SNR = SNR;
     }
 
-    public float getELEV() {
+    public double getELEV() {
         return ELEV;
     }
 
-    public void setELEV(float ELEV) {
+    public void setELEV(double ELEV) {
         this.ELEV = ELEV;
     }
 
-    public float getAZIM() {
+    public double getAZIM() {
         return AZIM;
     }
 
-    public void setAZIM(float AZIM) {
+    public void setAZIM(double AZIM) {
         this.AZIM = AZIM;
     }
 
-    public boolean isTIPOSAT() {
+    public boolean getTIPOSAT() {
         return TIPOSAT;
     }
 
-    public void setTIPOSAT(boolean TIPOSAT) {
+    public void setTIPOSAT(boolean  TIPOSAT) {
         this.TIPOSAT = TIPOSAT;
     }
 }

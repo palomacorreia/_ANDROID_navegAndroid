@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -35,7 +37,9 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
     private TextView AZIM;
     private LocationManager locationManager;// O Gerente de localização
     private LocationProvider locProvider; // Provedor de localização
-
+    private Satelite objSatelite;
+    private ArrayList<Satelite> arraySatelite = new ArrayList<>();
+    private CircleView myview;
     private final int REQUEST_LOCATION = 2;
 
 
@@ -159,12 +163,28 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
                 Iterable<GpsSatellite> sats = gpsStatus.getSatellites();
                 for (GpsSatellite sat : sats) {
                     //processe as informações de cada satélite
-                    gnsstext+= ""+sat.getPrn();
-                    SNRtext+= ""+sat.getSnr();
-                    ELEVtext+= ""+sat.getElevation();
-                    AZIMtext+=" "+sat.getAzimuth();
+//                    gnsstext += "" + sat.getPrn();
+//                    SNRtext += "" + sat.getSnr();
+//                    ELEVtext += "" + sat.getElevation();
+//                    AZImmMtext += " " + sat.getAzimuth();
                     //  sat.usedInFix();  //DIFERENCIA OS SATELITES
+
+                    objSatelite = new Satelite();
+                    objSatelite.setGNSS(sat.getPrn());
+                    objSatelite.setSNR(sat.getSnr());
+                    objSatelite.setELEV(sat.getElevation());
+                    objSatelite.setAZIM(sat.getAzimuth());
+                    objSatelite.setTIPOSAT(sat.usedInFix());
+
+                    arraySatelite.add(objSatelite);
+//                    System.out.println("AZIM: %f"+ sat.getAzimuth());
+//                    System.out.println("SATEITE DE DEUS:" + objSatelite.getGNSS());
+
                 }
+
+                //Manda array de satelite para a CircleView
+                myview.setSatInfo(arraySatelite);
+
             }
         } catch (SecurityException e) {
             e.printStackTrace();

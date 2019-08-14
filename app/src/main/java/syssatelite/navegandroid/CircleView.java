@@ -8,6 +8,9 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 
@@ -59,7 +62,9 @@ public class CircleView extends View {
 
     }
 
-    public void setSatInfo(String sate[]) {
+    public void setSatInfo(ArrayList<Satelite> arraySatelite)
+    {
+        System.out.println("Arrayzinho:" + arraySatelite.get(1));
 
     }
 
