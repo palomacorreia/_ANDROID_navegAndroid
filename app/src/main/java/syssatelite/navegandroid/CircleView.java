@@ -20,8 +20,8 @@ public class CircleView extends View {
     private String text;      // texto
     private Rect rectangle;
     private Paint paint;
-    // construtor
 
+    // construtor
     public CircleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs,R.styleable.custom_attributes, 0, 0);
@@ -36,9 +36,6 @@ public class CircleView extends View {
         }
 
     }
-
-
-
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -62,10 +59,30 @@ public class CircleView extends View {
 
     }
 
-    public void setSatInfo(ArrayList<Satelite> arraySatelite)
+    public void SatInfo(Satelite arraySat)
     {
-        System.out.println("Arrayzinho:" + arraySatelite.get(1));
+        double Xc, Yc, Xs, Ys;
+        int radius = 8;
+        int W = getWidth();
+        int H = getHeight();
+        Paint paint=new Paint();
+        Canvas canvas =  new Canvas();
 
+        Xs = radius * Math.cos(arraySat.getELEV()* Math.sin(arraySat.getAZIM()));
+        Ys = radius * Math.cos(arraySat.getELEV()) * Math.cos(arraySat.getAZIM());
+
+        Xc = Xs + W/2;
+        Yc = -Ys + H/2;
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.BLUE);
+
+        canvas.drawPaint(paint);
+        // Use Color.parseColor to define HTML colors
+        paint.setColor(Color.parseColor("#5ccd5c"));
+
+        canvas.drawCircle((float) Xc, (float)Yc, radius, paint);
+        System.out.println("DESENHEI O SATELITE MEU AMOR!");
     }
 
 }

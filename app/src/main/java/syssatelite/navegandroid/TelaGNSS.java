@@ -2,6 +2,7 @@ package syssatelite.navegandroid;
 
 import android.Manifest;
 import android.app.Service;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
@@ -9,12 +10,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -24,21 +30,22 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
     private String lat;
     private String lon;
     private String alt;
-    private String gnsstext=">";
-    private String SNRtext=">";
-    private String ELEVtext=">";
-    private String AZIMtext=">";
+    private String gnsstext = ">";
+    private String SNRtext = ">";
+    private String ELEVtext = ">";
+    private String AZIMtext = ">";
     private TextView latitudePosition;
     private TextView longitudePosition;
     private TextView altitudePosition;
     private TextView GNSS;
     private TextView SNR;
-    private TextView  ELEV;
+    private TextView ELEV;
     private TextView AZIM;
+    private Context context;
     private LocationManager locationManager;// O Gerente de localização
     private LocationProvider locProvider; // Provedor de localização
-    private Satelite objSatelite;
-    private ArrayList<Satelite> arraySatelite = new ArrayList<>();
+    private Satelite objSatelite = new Satelite();
+    private ArrayList<Satelite> arraySatelite = new ArrayList<Satelite>();
     private CircleView myview;
     private final int REQUEST_LOCATION = 2;
 
@@ -51,10 +58,11 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         latitudePosition = (TextView) findViewById(R.id.latitude);
         longitudePosition = (TextView) findViewById(R.id.longitude);
         altitudePosition = (TextView) findViewById(R.id.altitude);
-       // GNSS= (TextView) findViewById(R.id.gnss);
+        // GNSS= (TextView) findViewById(R.id.gnss);
 //        SNR=(TextView)findViewById(R.id.snr);
 //        ELEV =(TextView)findViewById(R.id.elev);
 //        AZIM=(TextView)findViewById(R.id.azimute);
+        myview=(CircleView)findViewById(R.id.ciurculoviewid);
         locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
     }
 
@@ -123,13 +131,13 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         // Aqui a nova localização
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
-        double altitude =location.getAltitude();
+        double altitude = location.getAltitude();
 
         lat = (Location.convert(latitude, Location.FORMAT_SECONDS));
         latitudePosition.setText(lat);
         lon = (Location.convert(longitude, Location.FORMAT_SECONDS));
         longitudePosition.setText(lon);
-        alt=(Location.convert(longitude, Location.FORMAT_SECONDS));
+        alt = (Location.convert(longitude, Location.FORMAT_SECONDS));
         altitudePosition.setText(alt);
 
 
@@ -154,45 +162,42 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void onGpsStatusChanged(int event) {
-        // Alguma mudança no sistema GPS
-        try {
-            GpsStatus gpsStatus=locationManager.getGpsStatus(null);
-            // Informações do sistema estão encapsuladas no objeto gpsStatus
-            if (gpsStatus!=null) {
-                Iterable<GpsSatellite> sats = gpsStatus.getSatellites();
-                for (GpsSatellite sat : sats) {
-                    //processe as informações de cada satélite
-//                    gnsstext += "" + sat.getPrn();
-//                    SNRtext += "" + sat.getSnr();
-//                    ELEVtext += "" + sat.getElevation();
-//                    AZImmMtext += " " + sat.getAzimuth();
-                    //  sat.usedInFix();  //DIFERENCIA OS SATELITES
 
-                    objSatelite = new Satelite();
-                    objSatelite.setGNSS(sat.getPrn());
-                    objSatelite.setSNR(sat.getSnr());
-                    objSatelite.setELEV(sat.getElevation());
-                    objSatelite.setAZIM(sat.getAzimuth());
-                    objSatelite.setTIPOSAT(sat.usedInFix());
-
-                    arraySatelite.add(objSatelite);
-//                    System.out.println("AZIM: %f"+ sat.getAzimuth());
-//                    System.out.println("SATEITE DE DEUS:" + objSatelite.getGNSS());
-
-                }
-
-                //Manda array de satelite para a CircleView
-                myview.setSatInfo(arraySatelite);
-
-            }
-        } catch (SecurityException e) {
-            e.printStackTrace();
+        String strGpsStats = "";
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    Activity#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
         }
-//        GNSS.setText(gnsstext);
-//        SNR.setText(SNRtext);
-//        ELEV.setText(ELEVtext);
-//        AZIM.setText(AZIMtext);
+        GpsStatus gpsStatus = locationManager.getGpsStatus(null);
+        if(gpsStatus != null) {
+            Iterable<GpsSatellite>satellites = gpsStatus.getSatellites();
+            Iterator<GpsSatellite>sat = satellites.iterator();
+            int i=0;
+            while (sat.hasNext()) {
+                GpsSatellite satellite = sat.next();
+                strGpsStats+= (i++) + ": " + "Pseudo-random number for the satellite:  "+satellite.getPrn() + "," + "Satellite was used by the GPS calculation: " + satellite.usedInFix() + "," + "Signal to noise ratio for the satellite: "+satellite.getSnr() + "," + "Azimuth of the satellite in degrees: "+satellite.getAzimuth() + "," +"Elevation of the satellite in degrees: "+satellite.getElevation()+ "\n\n";
+                objSatelite.setAZIM(satellite.getAzimuth());
+                objSatelite.setTIPOSAT(satellite.usedInFix());
+                objSatelite.setELEV(satellite.getElevation());
+                objSatelite.setGNSS(satellite.getPrn());
+                objSatelite.setSNR(satellite.getSnr());
+                //arraySatelite.add(objSatelite);
+                if (objSatelite != null && arraySatelite.size()!= 0 && strGpsStats != "") {
+                    System.out.println("SATELITE1:" + strGpsStats);
+                    myview.SatInfo(objSatelite);
+                }
+                System.out.println("SATELITE2:" + strGpsStats);
+            }
+
+        }
     }
 
 }
