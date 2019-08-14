@@ -42,15 +42,15 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vistadecima);
+        setContentView(R.layout.activity_tela_gnss);
 
         latitudePosition = (TextView) findViewById(R.id.latitude);
         longitudePosition = (TextView) findViewById(R.id.longitude);
         altitudePosition = (TextView) findViewById(R.id.altitude);
-        GNSS= (TextView) findViewById(R.id.gnss);
-        SNR=(TextView)findViewById(R.id.snr);
-        ELEV =(TextView)findViewById(R.id.elev);
-        //AZIM=(TextView)findViewById(R.id.azimute);
+       // GNSS= (TextView) findViewById(R.id.gnss);
+//        SNR=(TextView)findViewById(R.id.snr);
+//        ELEV =(TextView)findViewById(R.id.elev);
+//        AZIM=(TextView)findViewById(R.id.azimute);
         locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
     }
 
@@ -122,11 +122,11 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         double altitude =location.getAltitude();
 
         lat = (Location.convert(latitude, Location.FORMAT_SECONDS));
-        //latitudePosition.setText(lat);
+        latitudePosition.setText(lat);
         lon = (Location.convert(longitude, Location.FORMAT_SECONDS));
-        //longitudePosition.setText(lon);
+        longitudePosition.setText(lon);
         alt=(Location.convert(longitude, Location.FORMAT_SECONDS));
-        //altitudePosition.setText(alt);
+        altitudePosition.setText(alt);
 
 
     }
