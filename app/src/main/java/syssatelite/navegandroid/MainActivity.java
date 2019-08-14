@@ -40,10 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent gnss = new Intent(MainActivity.this, TelaGNSS.class);
                 startActivity(gnss);
                 return true;
-            case R.id.ceu:
-                Intent ceu = new Intent(MainActivity.this, SatelitedeCima.class);
-                startActivity(ceu);
-                return true;
+
             case R.id.sobre:
                 Intent sobre = new Intent(MainActivity.this, telaSobre.class);
                 startActivity(sobre);
