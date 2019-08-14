@@ -57,6 +57,7 @@ public class CircleView extends View {
         canvas.drawCircle(x / 2, y / 2, radius*2, paint);
         canvas.drawCircle(x / 2, y / 2, radius/6, paint);
 
+
     }
 
     public void SatInfo(Satelite arraySat)

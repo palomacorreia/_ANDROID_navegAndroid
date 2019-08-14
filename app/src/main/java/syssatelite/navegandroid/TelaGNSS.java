@@ -190,11 +190,11 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
                 objSatelite.setGNSS(satellite.getPrn());
                 objSatelite.setSNR(satellite.getSnr());
                 //arraySatelite.add(objSatelite);
-                if (objSatelite != null && arraySatelite.size()!= 0 && strGpsStats != "") {
-                    System.out.println("SATELITE1:" + strGpsStats);
+//                if (objSatelite != null && arraySatelite.size()!= 0 && strGpsStats != "") {
+//                    System.out.println("SATELITE1:" + strGpsStats);
                     myview.SatInfo(objSatelite);
-                }
-                System.out.println("SATELITE2:" + strGpsStats);
+//                }
+//                System.out.println("SATELITE2:" + strGpsStats);
             }
 
         }
