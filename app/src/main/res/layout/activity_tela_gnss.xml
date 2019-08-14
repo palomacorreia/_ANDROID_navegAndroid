@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:layout_weight=".5">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="120dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -27,63 +27,69 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="18dp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/latitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/no_text"
-                android:textColor="@color/colorBlack"
+                android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:layout_gravity="center"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/longitude_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/longitude"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorBlack"
-                android:layout_marginTop="32dp"
-                android:layout_gravity="center"/>
-            <TextView
-                android:id="@+id/longitude"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/no_text"
-                android:textColor="@color/colorBlack"
-                android:layout_marginTop="16dp"
-                android:layout_gravity="center"/>
+                android:textColor="@color/colorBlack" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="120dp"
             android:layout_weight="1"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/longitude_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="32dp"
+                android:text="@string/longitude"
+                android:textColor="@color/colorBlack"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/longitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/no_text"
+                android:textColor="@color/colorBlack" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/altitude_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/altitude"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorBlack"
+                android:layout_gravity="center"
                 android:layout_marginTop="32dp"
-                android:layout_gravity="center"/>
+                android:text="@string/altitude"
+                android:textColor="@color/colorBlack"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/altitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/no_text"
-                android:textColor="@color/colorBlack"
+                android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:layout_gravity="center"/>
+                android:text="@string/no_text"
+                android:textColor="@color/colorBlack" />
         </LinearLayout>
     </LinearLayout>
 
@@ -91,105 +97,31 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/gnss_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="32dp"
-                android:text="@string/gnss_title"
-                android:textColor="@color/colorBlack"
-                android:textSize="14dp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/gnss"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_text"
-                android:textColor="@color/colorBlack"
-                android:layout_marginTop="1dp"
-                android:layout_gravity="center"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/snr_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/snr_title"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorBlack"
-                android:layout_marginTop="32dp"
-                android:layout_gravity="center"/>
-            <TextView
-                android:id="@+id/snr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_text"
-                android:textColor="@color/colorBlack"
-                android:layout_marginTop="16dp"
-                android:layout_gravity="center"/>
-        </LinearLayout>
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="400dp"
+            android:layout_weight="50"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/elev_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/elev_title"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorBlack"
-                android:layout_marginTop="32dp"
-                android:layout_gravity="center"/>
-            <TextView
-                android:id="@+id/elev"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_text"
-                android:textColor="@color/colorBlack"
-                android:layout_marginTop="16dp"
-                android:layout_gravity="center"/>
+
+            <syssatelite.navegandroid.CircleView
+
+                android:id="@+id/ciurculoviewid"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.493"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.924"
+                custom:circleView_circleColor="#4169E1"
+                custom:circleView_textColor="#BBB" />
         </LinearLayout>
 
-        <!--<TextView-->
-            <!--android:id="@+id/azim_title"-->
-            <!--android:layout_width="85dp"-->
-            <!--android:layout_height="372dp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginTop="32dp"-->
-            <!--android:text="@string/azim_title"-->
-            <!--android:textColor="@color/colorBlack"-->
-            <!--android:textSize="14dp"-->
-            <!--android:textStyle="bold" />-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent">-->
-            <!--<TextView-->
-                <!--android:id="@+id/azimute"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/no_text"-->
-                <!--android:textColor="@color/colorBlack"-->
-                <!--android:layout_marginTop="16dp"-->
-                <!--android:layout_gravity="center"/>-->
-        <!--</LinearLayout>-->
+
     </LinearLayout>
-    </LinearLayout>
+</LinearLayout>
 

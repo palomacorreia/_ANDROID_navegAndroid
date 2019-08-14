@@ -28,17 +28,6 @@ public class CircleView extends View {
             textColor = a.getInteger(R.styleable.custom_attributes_circleView_textColor, 0);
             circleColor = a.getInteger(R.styleable.custom_attributes_circleView_circleColor, 0);
 
-
-            int x = 50;
-            int y = 50;
-            int sideLength = 200;
-
-            // create a rectangle that we'll draw later
-            rectangle = new Rect(x, y, sideLength, sideLength);
-
-            // create the Paint and set its color
-            paint = new Paint();
-            paint.setColor(Color.GRAY);
         } finally {
             a.recycle();
         }
@@ -58,14 +47,14 @@ public class CircleView extends View {
         int x = getWidth();
         int y = getHeight();
         int radius;
-        radius = 200;
+        radius = 100;
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.WHITE);
         canvas.drawPaint(paint);
         // Use Color.parseColor to define HTML colors
         paint.setColor(Color.parseColor("#CD5C5C"));
         canvas.drawCircle(x / 2, y / 2, radius, paint);
-        canvas.drawCircle(x / 2, y / 2, radius/2, paint);
+        canvas.drawCircle(x / 2, y / 2, radius*2, paint);
         canvas.drawCircle(x / 2, y / 2, radius/6, paint);
 
     }

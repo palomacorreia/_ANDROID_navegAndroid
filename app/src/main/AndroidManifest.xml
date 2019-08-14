@@ -42,8 +42,6 @@
         </activity>
         <activity android:name=".TelaGNSS">
         </activity>
-        <activity android:name=".SatelitedeCima">
-        </activity>
         <activity
             android:name=".mapa"
             android:label="@string/title_activity_mapa">
