@@ -48,6 +48,7 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
     private ArrayList<Satelite> arraySatelite = new ArrayList<Satelite>();
     private CircleView myview;
     private final int REQUEST_LOCATION = 2;
+    public  int i=0;
 
 
     @Override
@@ -180,7 +181,6 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         if(gpsStatus != null) {
             Iterable<GpsSatellite>satellites = gpsStatus.getSatellites();
             Iterator<GpsSatellite>sat = satellites.iterator();
-            int i=0;
             while (sat.hasNext()) {
                 GpsSatellite satellite = sat.next();
                 strGpsStats+= (i++) + ": " + "Pseudo-random number for the satellite:  "+satellite.getPrn() + "," + "Satellite was used by the GPS calculation: " + satellite.usedInFix() + "," + "Signal to noise ratio for the satellite: "+satellite.getSnr() + "," + "Azimuth of the satellite in degrees: "+satellite.getAzimuth() + "," +"Elevation of the satellite in degrees: "+satellite.getElevation()+ "\n\n";
@@ -191,13 +191,14 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
                 objSatelite.setSNR(satellite.getSnr());
                 //arraySatelite.add(objSatelite);
 //                if (objSatelite != null && arraySatelite.size()!= 0 && strGpsStats != "") {
-//                    System.out.println("SATELITE1:" + strGpsStats);
+//                    System.out.println("SATELITE1:" + sttemos aterGpsStats);
                     myview.SatInfo(objSatelite);
-//                }
-//                System.out.println("SATELITE2:" + strGpsStats);
-            }
 
+                System.out.println("SATELITE:" + strGpsStats);
+            }
         }
+       // myview.postInvalidate();
+
     }
 
 }

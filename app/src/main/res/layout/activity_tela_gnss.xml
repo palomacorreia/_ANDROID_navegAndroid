@@ -124,18 +124,5 @@
 
     </LinearLayout>
 
-    <syssatelite.navegandroid.CircleView
-
-        android:id="@+id/satelitezinhos"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.924"
-        custom:circleView_circleColor="#4169E1"
-        custom:circleView_textColor="#BBB" />
 </LinearLayout>
 
