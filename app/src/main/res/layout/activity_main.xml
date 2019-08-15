@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="syssatelite.navegandroid.MainActivity">
+    tools:context="syssatelite.navegandroid.MainActivity"
+    android:background="@drawable/logo">
 
     <TextView
         android:layout_width="wrap_content"

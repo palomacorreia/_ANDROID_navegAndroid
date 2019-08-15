@@ -26,12 +26,7 @@
         android:icon="@android:drawable/ic_menu_preferences"
         android:showAsAction="withText"
         android:title="@string/sat" />
-    <item
-        android:id="@+id/ceu"
-        android:alphabeticShortcut="s"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:showAsAction="withText"
-        android:title="@string/ceu" />
+
     <item android:id="@+id/sobre"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="@string/sobre"
