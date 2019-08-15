@@ -97,7 +97,8 @@ public class CircleView extends View {
         paint.setColor(Color.WHITE);
         paint.setColor(Color.parseColor("#5ccd5c"));
 
-        canvas.drawCircle(Xcc, Ycc, 20, paint);}
+        canvas.drawCircle(Xcc, Ycc, 20, paint);
+    }
 
 
 

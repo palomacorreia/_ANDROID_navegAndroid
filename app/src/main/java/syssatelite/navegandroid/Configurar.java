@@ -1,6 +1,7 @@
 package syssatelite.navegandroid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -26,10 +27,65 @@ public class Configurar extends AppCompatActivity {
         final Button botaoSalvar = findViewById(R.id.salvar);
         final Switch escolha = (Switch)findViewById(R.id.trafego);
 
+        
+        // recupera (ou cria) uma instância do arquivo de preferencia do Android,
+        // pelo seu nome/chave
+        SharedPreferences pref = getSharedPreferences("configuracoes", MODE_PRIVATE);
+        // recupera a informação
+        String grau = pref.getString("grau", null);
+        String unidade = pref.getString("unidade", null);
+        String orientacao = pref.getString("orientacao", null);
+        String tipo = pref.getString("tipo", null);
+        String ligado = pref.getString("ligado", null);
+
+        RadioGroup radioGroupGrauFormato = (RadioGroup) findViewById(R.id.formatoGroup);
+        RadioGroup radioGroupGrauUnidade = (RadioGroup) findViewById(R.id.unidadeGroup);
+        RadioGroup radioGroupGrauOrientacao = (RadioGroup) findViewById(R.id.orientacaoGroup);
+        RadioGroup radioGroupGrauTipo = (RadioGroup) findViewById(R.id.tipoGroup);
+        Switch switchTrafego = (Switch) findViewById(R.id.trafego);
+
+        if(grau != null && unidade!= null && orientacao!= null && tipo!= null && ligado!= null)
+        {
+            System.out.println("Grau "+ grau);
+            if(grau.equals("Decimal")){
+                radioGroupGrauFormato.check(R.id.grauDecimal);
+            }else if (grau.equals("Minuto")){
+                radioGroupGrauFormato.check(R.id.grauMinuto);
+            }else if(grau.equals("Segundo")){
+                radioGroupGrauFormato.check(R.id.grauSegundo);
+            }
+
+            if(unidade.equals("km")){
+                radioGroupGrauUnidade.check(R.id.km);
+            }else if (unidade.equals("mph")){
+                radioGroupGrauUnidade.check(R.id.mph);
+            }
+
+            if(orientacao.equals("Nenhuma")){
+                radioGroupGrauOrientacao.check(R.id.nenhuma);
+            }else if (orientacao.equals("North")){
+                radioGroupGrauOrientacao.check(R.id.north);
+            }else if(orientacao.equals("Course")){
+                radioGroupGrauOrientacao.check(R.id.course);
+            }
+
+            if(tipo.equals("Vetorial")){
+                radioGroupGrauTipo.check(R.id.vetorial);
+            }else if (tipo.equals("Imagem")){
+                radioGroupGrauTipo.check(R.id.imagem);
+            }
+
+            if(ligado.equals("Sim")){
+                switchTrafego.setChecked(true);
+            }else if (ligado.equals("Nao")){
+                switchTrafego.setChecked(false);
+            }
+        }
+        
+
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("sou bonito");
                 //shared para o usuario
                 SharedPreferences prefs1 = getSharedPreferences("configuracoes", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs1.edit();
@@ -64,13 +120,13 @@ public class Configurar extends AppCompatActivity {
                 switch (orientacaoGroup.getCheckedRadioButtonId()) {
                     case R.id.nenhuma:
                         //armazena os valores
-                        editor.putString("orientacao", "nenhuma");
+                        editor.putString("orientacao", "Nenhuma");
                         break;
                     case R.id.north:
-                        editor.putString("orientacao", "north");
+                        editor.putString("orientacao", "North");
                         break;
                     case R.id.course:
-                        editor.putString("orientacao", "course");
+                        editor.putString("orientacao", "Course");
                         break;
                 }
 
@@ -79,33 +135,41 @@ public class Configurar extends AppCompatActivity {
 
                     case R.id.vetorial:
                         //armazena os valores
-                        editor.putString("tipo", "vetorial");
+                        editor.putString("tipo", "Vetorial");
                         break;
                     case R.id.imagem:
-                        editor.putString("tipo", "imagem");
+                        editor.putString("tipo", "Imagem");
                         break;
 
                 }
 
 
-                System.out.println("Sim paid");
                 SharedPreferences prefs = getSharedPreferences("configuracoes", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor2 = prefs.edit();
                 if(escolha.isChecked())
                 {
-                    System.out.println("Sim pai");
-                    editor2.putString("ligado", "sim");
+                    editor2.putString("ligado", "Sim");
 
                 }else{
 
-                    editor2.putString("ligado", "nao");
+                    editor2.putString("ligado", "Nao");
+
                 }
                 //Amazena os valores
                 editor2.apply();
                 editor.apply();
+                Toast toast = Toast.makeText(getApplicationContext(), "Configurações salvas!", Toast.LENGTH_SHORT);
+                toast.show();
+                Rediceriona();
+
             }
         });
+    }
 
+    public void Rediceriona()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 }
