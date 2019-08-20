@@ -140,8 +140,6 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         longitudePosition.setText(lon);
         alt = (Location.convert(longitude, Location.FORMAT_SECONDS));
         altitudePosition.setText(alt);
-
-
     }
 
     @Override
