@@ -2,14 +2,19 @@ package syssatelite.navegandroid;
 
 import android.Manifest;
 import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -22,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 public class mapa extends FragmentActivity implements OnMapReadyCallback, LocationListener {
@@ -34,6 +40,8 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
     private LatLng user;
 
 
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +51,12 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    Activity#requestPermissions
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,  0, this); //Requests that I cast the fourth parameter to android.location.LocationListener, doing so results in a castexception.
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -53,6 +67,7 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
 //        // recupera (ou cria) uma instância do arquivo de preferencia do Android,
 //        // pelo seu nome/chave
@@ -76,14 +91,15 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
 //        }
 
         //NORTH
-        if(userLocation!=null) {
-
-            user = new LatLng(userLocation.getLatitude(),userLocation.getLongitude());
+        if (userLocation != null) {
+            System.out.println("LAtitude" + userLocation.getLatitude() + "\t");
+            System.out.println("Longitude" + userLocation.getLongitude() + "\t");
+            user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
+        } else {
+            System.out.println("SOU null");
+            user = new LatLng(-12.9531, -38.4589);
         }
-        else {
 
-            user=new LatLng(-12.9531,-38.4589);
-        }
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(user)  //CENTRO DO MAPA
                 .zoom(17)
@@ -92,39 +108,24 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
 
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        userLocation = location;
-        if (mMap!=null) {
-            mMap.clear();
-            //mMap.addPolyline()
-        }
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
 
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onResume() {
         super.onResume();
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    Activity#requestPermissions
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
         //Permissão do Usuário
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
+            System.out.println("ativaGPS");
             // A permissão foi dada
             ativaGPS();
         } else {
@@ -145,7 +146,7 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
     public void ativaGPS() {
         try {
             locProvider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
-            locationManager.requestLocationUpdates(locProvider.getName(), 30000, 1, this);
+            locationManager.requestLocationUpdates(locProvider.getName(), 1000, 1, this);
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -157,6 +158,39 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
         } catch (SecurityException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        System.out.println("onLocationChanged");
+        userLocation = location;
+        if (mMap != null) {
+            System.out.println("onLocationChanged não é null");
+            mMap.clear();
+            user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(user)  //CENTRO DO MAPA
+                    .zoom(17)
+                    .bearing(90)     //ORIENTAÇÃO DA CÂMERA
+                    .build();       //UTILIZA O BUILD PARA CRIAR A CâMERA
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
+            //mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
+            //mMap.addPolyline()
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
     }
 
 }

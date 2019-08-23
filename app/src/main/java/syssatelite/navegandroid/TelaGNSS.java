@@ -132,7 +132,6 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         // Aqui a nova localização
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
-        double altitude = location.getAltitude();
 
         lat = (Location.convert(latitude, Location.FORMAT_SECONDS));
         latitudePosition.setText(lat);
