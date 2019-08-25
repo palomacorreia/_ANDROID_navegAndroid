@@ -2,7 +2,6 @@ package syssatelite.navegandroid;
 
 import android.Manifest;
 import android.app.Service;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
@@ -27,18 +26,9 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
     private String lat;
     private String lon;
     private String alt;
-    private String gnsstext = ">";
-    private String SNRtext = ">";
-    private String ELEVtext = ">";
-    private String AZIMtext = ">";
     private TextView latitudePosition;
     private TextView longitudePosition;
     private TextView altitudePosition;
-    private TextView GNSS;
-    private TextView SNR;
-    private TextView ELEV;
-    private TextView AZIM;
-    private Context context;
     private LocationManager locationManager;// O Gerente de localização
     private LocationProvider locProvider; // Provedor de localização
     private Satelite objSatelite = new Satelite();
