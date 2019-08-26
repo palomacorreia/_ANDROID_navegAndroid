@@ -6,6 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.hardware.GeomagneticField;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,14 +18,19 @@ import android.location.LocationProvider;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
@@ -38,6 +47,8 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
     private final int REQUEST_LOCATION = 2;
     private Location userLocation;
     private LatLng user;
+    private  String grau, unidade, orientacao, tipo, ligado;
+
 
 
 
@@ -69,45 +80,30 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
-//        // recupera (ou cria) uma instância do arquivo de preferencia do Android,
-//        // pelo seu nome/chave
-//        SharedPreferences pref = getSharedPreferences("configuracoes", MODE_PRIVATE);
-//        // recupera a informação
-//        String grau = pref.getString("grau", null);
-//        String unidade = pref.getString("unidade", null);
-//        String orientacao = pref.getString("orientacao", null);
-//        String tipo = pref.getString("tipo", null);
-//        String ligado = pref.getString("ligado", null);
-//
-//
-//
-//
-//        if(ligado!= null) {
-//            if (ligado.equals("Sim")) {
-//                mMap.setTrafficEnabled(true);
-//            } else {
-//                mMap.setTrafficEnabled(false);
-//            }
-//        }
+        // recupera (ou cria) uma instância do arquivo de preferencia do Android,
+        // pelo seu nome/chave
+        SharedPreferences pref = getSharedPreferences("configuracoes", MODE_PRIVATE);
+        // recupera a informação
+        grau = pref.getString("grau", null);
+        unidade = pref.getString("unidade", null);
+        orientacao = pref.getString("orientacao", null);
+        tipo = pref.getString("tipo", null);
+        ligado = pref.getString("ligado", null);
+
+        if(ligado!= null) {
+            if (ligado.equals("Sim")) {
+                mMap.setTrafficEnabled(true);
+            } else {
+                mMap.setTrafficEnabled(false);
+            }
+        }
 
         //NORTH
         if (userLocation != null) {
-            System.out.println("LAtitude" + userLocation.getLatitude() + "\t");
-            System.out.println("Longitude" + userLocation.getLongitude() + "\t");
             user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
         } else {
-            System.out.println("SOU null");
             user = new LatLng(-12.9531, -38.4589);
         }
-
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(user)  //CENTRO DO MAPA
-                .zoom(17)
-                .bearing(90)     //ORIENTAÇÃO DA CÂMERA
-                .build();       //UTILIZA O BUILD PARA CRIAR A CâMERA
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
-
 
     }
 
@@ -125,7 +121,6 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
-            System.out.println("ativaGPS");
             // A permissão foi dada
             ativaGPS();
         } else {
@@ -162,23 +157,50 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
 
     @Override
     public void onLocationChanged(Location location) {
-        System.out.println("onLocationChanged");
         userLocation = location;
-        if (mMap != null) {
-            System.out.println("onLocationChanged não é null");
+
+        if (mMap != null)
+        {
             mMap.clear();
             user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
 
+            TextView longitude = (TextView)findViewById(R.id.longitude);
+            TextView latitude = (TextView)findViewById(R.id.latitude);
+            longitude.setText("Longitude: " + userLocation.getLongitude());
+            latitude.setText("Latitude: " + userLocation.getLatitude());
+        }
+
+        if(orientacao.equals("North")) {
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(user)  //CENTRO DO MAPA
-                    .zoom(17)
-                    .bearing(90)     //ORIENTAÇÃO DA CÂMERA
-                    .build();       //UTILIZA O BUILD PARA CRIAR A CâMERA
+                        .target(user)  //CENTRO DO MAPA
+                        .zoom(17)
+                        .bearing(90)     //ORIENTAÇÃO DA CÂMERA
+                        .build();       //UTILIZA O BUILD PARA CRIAR A CâMERA
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
-            //mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
-            //mMap.addPolyline()
+
+        }else if (orientacao.equals("Course"))
+        {
+            float bearing = userLocation.getBearing();
+            CameraPosition cp = new CameraPosition.Builder()
+                    .target(user)
+                    .zoom(17)
+                    .bearing(bearing)
+                    .build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp));
+            mMap.addMarker(new MarkerOptions().position(user).title("Sua localização COURSE!"));
         }
+        else
+        {
+            CameraPosition cp = new CameraPosition.Builder()
+                    .target(user)
+                    .zoom(17)
+                    .bearing(35.0f)
+                    .build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp));
+            mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
+        }
+
     }
 
     @Override
@@ -192,5 +214,24 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
     @Override
     public void onProviderDisabled(String provider) {
     }
+
+//    private void updateCameraBearing(GoogleMap googleMap, float bearing) {
+////        if ( googleMap == null) return;
+////        CameraPosition camPos = CameraPosition
+////                .builder(googleMap.getCameraPosition() // current Camera
+////                )
+////                .bearing(bearing)
+////                .build();
+////        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(camPos));
+////        googleMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
+//        CameraPosition cp = new CameraPosition.Builder()
+//                .target(user)
+//                .zoom(17)
+//                .bearing(bearing)
+//                .build();
+//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp));
+//        mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
+//    }
+
 
 }
