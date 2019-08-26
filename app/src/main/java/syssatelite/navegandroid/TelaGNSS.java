@@ -2,7 +2,6 @@ package syssatelite.navegandroid;
 
 import android.Manifest;
 import android.app.Service;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
@@ -12,17 +11,14 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import java.util.Iterator;
 
 
 public class TelaGNSS extends AppCompatActivity implements LocationListener, GpsStatus.Listener {
@@ -30,22 +26,12 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
     private String lat;
     private String lon;
     private String alt;
-    private String gnsstext = ">";
-    private String SNRtext = ">";
-    private String ELEVtext = ">";
-    private String AZIMtext = ">";
     private TextView latitudePosition;
     private TextView longitudePosition;
     private TextView altitudePosition;
-    private TextView GNSS;
-    private TextView SNR;
-    private TextView ELEV;
-    private TextView AZIM;
-    private Context context;
     private LocationManager locationManager;// O Gerente de localização
     private LocationProvider locProvider; // Provedor de localização
     private Satelite objSatelite = new Satelite();
-    private ArrayList<Satelite> arraySatelite = new ArrayList<Satelite>();
     private CircleView myview;
     private final int REQUEST_LOCATION = 2;
     public  int i=0;
@@ -59,10 +45,6 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         latitudePosition = (TextView) findViewById(R.id.latitude);
         longitudePosition = (TextView) findViewById(R.id.longitude);
         altitudePosition = (TextView) findViewById(R.id.altitude);
-        // GNSS= (TextView) findViewById(R.id.gnss);
-//        SNR=(TextView)findViewById(R.id.snr);
-//        ELEV =(TextView)findViewById(R.id.elev);
-//        AZIM=(TextView)findViewById(R.id.azimute);
         myview=(CircleView)findViewById(R.id.ciurculoviewid);
         locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
     }
@@ -132,6 +114,7 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         // Aqui a nova localização
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
+        double altitude = location.getAltitude();
 
         lat = (Location.convert(latitude, Location.FORMAT_SECONDS));
         latitudePosition.setText(lat);
@@ -139,6 +122,8 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
         longitudePosition.setText(lon);
         alt = (Location.convert(longitude, Location.FORMAT_SECONDS));
         altitudePosition.setText(alt);
+
+
     }
 
     @Override
@@ -189,12 +174,16 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
                 //arraySatelite.add(objSatelite);
 //                if (objSatelite != null && arraySatelite.size()!= 0 && strGpsStats != "") {
 //                    System.out.println("SATELITE1:" + sttemos aterGpsStats);
-                    myview.SatInfo(objSatelite);
+
 
                 System.out.println("SATELITE:" + strGpsStats);
+                System.out.println("PRN gnss"+ satellite.getPrn());
             }
+
+            myview.setSats(satellites);
+            myview.postInvalidate();
         }
-       // myview.postInvalidate();
+
 
     }
 
