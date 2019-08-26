@@ -21,6 +21,12 @@
         android:showAsAction="withText"
         android:title="@string/localizar" />
     <item
+        android:id="@+id/historico"
+        android:alphabeticShortcut="s"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:showAsAction="withText"
+        android:title="@string/historico" />
+    <item
         android:id="@+id/sat"
         android:alphabeticShortcut="s"
         android:icon="@android:drawable/ic_menu_preferences"
