@@ -2,11 +2,11 @@ package syssatelite.navegandroid;
 
 import android.content.Intent;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.localizar:
                 Intent mapa = new Intent(MainActivity.this, mapa.class);
                 startActivity(mapa);
+                return true;
+            case R.id.historico:
+                Intent hist = new Intent(MainActivity.this, historico.class);
+                startActivity(hist);
                 return true;
             case R.id.sat:
                 Intent gnss = new Intent(MainActivity.this, TelaGNSS.class);
