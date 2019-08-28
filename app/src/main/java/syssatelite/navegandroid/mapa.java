@@ -105,6 +105,17 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
             user = new LatLng(-12.9531, -38.4589);
         }
 
+        if(tipo != null)
+        {
+            if(tipo.equals("Imagem"))
+            {
+                mMap.setMapType(mMap.MAP_TYPE_SATELLITE); // Here is where you set the map type
+            }else if(tipo.equals("Vetorial"))
+            {
+                mMap.setMapType(mMap.MAP_TYPE_NORMAL); // Here is where you set the map type
+            }
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
