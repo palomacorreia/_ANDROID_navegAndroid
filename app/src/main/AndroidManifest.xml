@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="syssatelite.navegandroid">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -21,7 +22,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -33,6 +33,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,19 +41,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Configurar">
-        </activity>
-        <activity android:name=".telaSobre">
-        </activity>
-        <activity android:name=".TelaGNSS">
-        </activity>
-        <activity android:name=".historico">
-        </activity>
+        <activity android:name=".Configurar"></activity>
+        <activity android:name=".telaSobre"></activity>
+        <activity android:name=".TelaGNSS"></activity>
+        <activity
+            android:name=".historico"
+            android:label="@string/historico"></activity>
         <activity
             android:name=".mapa"
-            android:label="@string/title_activity_mapa">
-        </activity>
-
+            android:label="@string/title_activity_mapa"></activity>
     </application>
 
 </manifest>
