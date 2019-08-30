@@ -48,6 +48,8 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
     private Location userLocation;
     private LatLng user;
     private  String grau, unidade, orientacao, tipo, ligado;
+    private String strlatitude, strlongitude;
+    private float velocidade;
 
 
 
@@ -100,8 +102,12 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
 
         //NORTH
         if (userLocation != null) {
+
             user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
+
         } else {
+
+            //UNEB
             user = new LatLng(-12.9531, -38.4589);
         }
 
@@ -173,44 +179,81 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
         if (mMap != null)
         {
             mMap.clear();
+            //cria um obj LatLng com a latitude e longitude mudando de acordo a localizacao
             user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
 
+            //velocidade do mapa
+            if(unidade != null)
+            {
+                if (unidade.equals("km"))
+                {
+                    velocidade = userLocation.getSpeed();
+
+                }else if(unidade.equals("mph"))
+                {
+                    velocidade = userLocation.getSpeed();
+                }
+
+                System.out.println("velocidade: "+ velocidade);
+            }
+
+
+            //Ver o grau de exibição e coloca na tela
+            if(grau.equals( "Decimal")) {
+                strlatitude = (userLocation.convert(userLocation.getLatitude(), userLocation.FORMAT_DEGREES));
+                strlongitude = (Location.convert(userLocation.getLongitude(), Location.FORMAT_DEGREES));
+            }
+            else if(grau.equals("Minuto")) {
+                strlatitude = (Location.convert(userLocation.getLatitude(), Location.FORMAT_MINUTES));
+                strlongitude = (Location.convert(userLocation.getLongitude(), Location.FORMAT_MINUTES));
+            }
+            else if(grau.equals("Segundo")){
+                    strlatitude = (Location.convert(userLocation.getLatitude(), Location.FORMAT_SECONDS));
+                    strlongitude = (Location.convert(userLocation.getLongitude(), Location.FORMAT_SECONDS));
+            }
+
+            //Seta no mapa a latitude , longitude e velocidade
             TextView longitude = (TextView)findViewById(R.id.longitude);
             TextView latitude = (TextView)findViewById(R.id.latitude);
-            longitude.setText("Longitude: " + userLocation.getLongitude());
-            latitude.setText("Latitude: " + userLocation.getLatitude());
-        }
+            TextView velocimetro = (TextView)findViewById(R.id.velocidade);
+            longitude.setText("Latitude: " + strlatitude);
+            latitude.setText("Longitude: " + strlongitude);
+            velocimetro.setText("Velocidade: " + velocidade);
 
-        if(orientacao.equals("North")) {
-            CameraPosition cameraPosition = new CameraPosition.Builder()
+            //Orientações do mapa
+            if(orientacao.equals("North")) {
+                CameraPosition cameraPosition = new CameraPosition.Builder()
                         .target(user)  //CENTRO DO MAPA
                         .zoom(17)
                         .bearing(90)     //ORIENTAÇÃO DA CÂMERA
                         .build();       //UTILIZA O BUILD PARA CRIAR A CâMERA
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
 
-        }else if (orientacao.equals("Course"))
-        {
-            float bearing = userLocation.getBearing();
-            CameraPosition cp = new CameraPosition.Builder()
-                    .target(user)
-                    .zoom(17)
-                    .bearing(bearing)
-                    .build();
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp));
-            mMap.addMarker(new MarkerOptions().position(user).title("Sua localização COURSE!"));
+            }else if (orientacao.equals("Course"))
+            {
+                float bearing = userLocation.getBearing();
+                CameraPosition cp = new CameraPosition.Builder()
+                        .target(user)
+                        .zoom(17)
+                        .bearing(bearing)
+                        .build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp));
+                mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
+            }
+            else
+            {
+                CameraPosition cp = new CameraPosition.Builder()
+                        .target(user)
+                        .zoom(17)
+                        .bearing(35.0f)
+                        .build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp));
+                mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
+            }
         }
-        else
-        {
-            CameraPosition cp = new CameraPosition.Builder()
-                    .target(user)
-                    .zoom(17)
-                    .bearing(35.0f)
-                    .build();
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp));
-            mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
-        }
+
+
 
     }
 
@@ -225,24 +268,6 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
     @Override
     public void onProviderDisabled(String provider) {
     }
-
-//    private void updateCameraBearing(GoogleMap googleMap, float bearing) {
-////        if ( googleMap == null) return;
-////        CameraPosition camPos = CameraPosition
-////                .builder(googleMap.getCameraPosition() // current Camera
-////                )
-////                .bearing(bearing)
-////                .build();
-////        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(camPos));
-////        googleMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
-//        CameraPosition cp = new CameraPosition.Builder()
-//                .target(user)
-//                .zoom(17)
-//                .bearing(bearing)
-//                .build();
-//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp));
-//        mMap.addMarker(new MarkerOptions().position(user).title("Sua localização!"));
-//    }
 
 
 }

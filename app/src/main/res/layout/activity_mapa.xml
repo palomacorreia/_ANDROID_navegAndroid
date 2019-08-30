@@ -16,7 +16,7 @@
     <LinearLayout
         android:id="@+id/validity"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:orientation="vertical"
         android:layout_gravity="bottom"
         android:background="@android:color/white">
@@ -24,14 +24,21 @@
             android:id="@+id/longitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="You are not a paid user."
+            android:text="@string/sistema"
             android:textAlignment="center"
             />
         <TextView
             android:id="@+id/latitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="You are not a paid user."
+            android:text="@string/sistema"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/velocidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sistema"
             android:textAlignment="center"
             />
     </LinearLayout>
