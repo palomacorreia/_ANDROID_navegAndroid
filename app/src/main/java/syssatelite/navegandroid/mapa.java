@@ -157,7 +157,7 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
         System.out.println("onLocationChanged");
         userLocation = location;
         if (mMap != null) {
-            System.out.println("onLocationChanged não é null");
+           // System.out.println("onLocationChanged não é null");
             mMap.clear();
             user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
 

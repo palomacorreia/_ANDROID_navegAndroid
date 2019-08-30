@@ -42,9 +42,12 @@
     <string name="historico"><b>Histórico de Localização</b></string>
     <string name="title_activity_historico">historico</string>
     <string name="title_home">Mapa Aqui</string>
-    <string name="title_dashboard">historico aqui</string>
+    <string name="title_dashboard">Historico aqui</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_list_view">Lista</string>
     <string name="title_map_view">Mapa</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     snr_title
 </resources>
