@@ -40,6 +40,7 @@
     <string name="ceu">Céu</string>
     <string name="sistema"><b>SISTEMA DE NAVEGAÇÃO</b></string>
     <string name="historico"><b>Histórico de Localização</b></string>
+    <string name="list"><b>Lista de Localização</b></string>
     <string name="title_activity_historico">historico</string>
     <string name="title_home">Mapa Aqui</string>
     <string name="title_dashboard">Historico aqui</string>
