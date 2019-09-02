@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuProgress"
-        android:showAsAction="always"
-        android:title="" />
-    <!--<item android:id="@+id/menuNewBuzz"-->
-        <!--android:icon="@android:drawable/ic_input_add"-->
-        <!--android:title="@string/localizar"-->
-        <!--android:alphabeticShortcut="n"-->
-        <!--android:showAsAction="ifRoom|withText" />-->
     <item android:id="@+id/configurar"
         android:icon="@android:drawable/ic_lock_lock"
         android:title="@string/configurar"

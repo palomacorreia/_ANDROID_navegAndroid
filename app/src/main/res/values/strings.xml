@@ -47,7 +47,4 @@
     <string name="title_list_view">Lista</string>
     <string name="title_map_view">Mapa</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    snr_title
 </resources>

@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(mapa);
                 return true;
             case R.id.historico:
-                Intent hist = new Intent(MainActivity.this, historico.class);
+                Intent hist = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(hist);
                 return true;
             case R.id.sat:

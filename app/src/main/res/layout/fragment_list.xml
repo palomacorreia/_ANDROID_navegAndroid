@@ -4,12 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <FrameLayout
-        android:id="@+id/list"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="fragmento lista">
-
-    </FrameLayout>
-
+        android:text="HISTORICO"
+        android:gravity="center_vertical|center_horizontal"/>
 </LinearLayout>
