@@ -1,9 +1,11 @@
 package syssatelite.navegandroid;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -25,6 +28,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,8 +42,6 @@ import java.util.Date;
 import java.util.Map;
 
 
-
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
     public GoogleMap mMap;
@@ -46,19 +49,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public Marker currentLocationMaker;
     public LatLng currentLocationLatLong;
     public DatabaseReference mDatabase;
+    private LocationManager locationManager;
 
+    //Desenhar linha
+    private ArrayList<LatLng> pontos;
+    Polyline linha;
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+
+        //iniciando o array de pontos
+        pontos = new ArrayList<LatLng>();
+
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getApplication(), "Sem permissão!", Toast.LENGTH_LONG).show();
+            ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         startGettingLocations();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        getMarkers();
-
+//        getMarkers();
     }
 
 
@@ -71,18 +92,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng recife = new LatLng(-12.9531, -38.4589);
-        mMap.addMarker(new MarkerOptions().position(recife).title("Marcador na uneb"));
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    Activity#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
 
-        CameraPosition cameraPosition = new CameraPosition.Builder().zoom(15).target(recife).build();
+        String provider = LocationManager.NETWORK_PROVIDER;
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        if (location != null)
+        {
+            LatLng minhaLaLn = new LatLng(location.getLatitude(), location.getLongitude());
+
+            MarkerOptions marcarMeuLocal = new MarkerOptions().position(minhaLaLn).title("Minha posição");
+            mMap.addMarker(marcarMeuLocal);
+
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(minhaLaLn, 13));
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                    .zoom(17)                   // Sets the zoom
+                    .bearing(90)                // Sets the orientation of the camera to east
+                    .tilt(40)                   // Sets the tilt of the camera to 30 degrees
+                    .build();                   // Creates a CameraPosition from the builder
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
 
 
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     @Override
@@ -91,7 +138,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (currentLocationMaker != null) {
             currentLocationMaker.remove();
         }
-        //Add marker
+                    //Add marker
         currentLocationLatLong = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(currentLocationLatLong);
@@ -107,8 +154,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mDatabase.child("location").child(String.valueOf( new Date().getTime())).setValue(locationData);
         Toast.makeText(this, "Localização atualizada", Toast.LENGTH_SHORT).show();
-        getMarkers();
+       // getMarkers();
 
+        //adicionar cada ponto ao array
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+        LatLng latLng = new LatLng(latitude, longitude);
+        pontos.add(latLng);
+        redesenharLinha();
+        System.out.println("chama redesenha linha");
+
+    }
+
+    private void redesenharLinha(){
+        System.out.println("Entrei em redesenha linha");
+
+        mMap.clear();  //apaga todos os marcadores e polilinhas
+
+        PolylineOptions options = new PolylineOptions().width(5).color(Color.BLUE).geodesic(true);
+        for (int i = 0; i < pontos.size(); i++) {
+            LatLng point = pontos.get(i);
+            options.add(point);
+        }
+        //addMarker(); //adiciona o marcador na posição atual
+        linha = mMap.addPolyline(options); //add Polyline
+
+        Toast.makeText(getApplication(), "Redesenhou!", Toast.LENGTH_LONG).show();
     }
 
 
