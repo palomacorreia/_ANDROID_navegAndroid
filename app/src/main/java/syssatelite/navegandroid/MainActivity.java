@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(hist);
                 return true;
             case R.id.List:
-                Intent list = new Intent(MainActivity.this, List.class);
+                Intent list = new Intent(MainActivity.this, HistoricoLog.class);
                 startActivity(list);
                 return true;
             case R.id.sat:

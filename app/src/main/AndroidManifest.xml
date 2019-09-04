@@ -46,7 +46,9 @@
         <activity android:name=".TelaGNSS" />
 
         <activity android:name=".MapsActivity" android:label="@string/historico"/>
-        <activity android:name=".List" android:label="@string/historico"/>
+        <activity android:name=".ListHistory" android:label="@string/historico"/>
+        <activity android:name=".HistoricoLog" android:label="@string/historico"/>
+
 
 
 
