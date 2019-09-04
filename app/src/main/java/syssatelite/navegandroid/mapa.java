@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -18,6 +20,7 @@ import android.location.LocationProvider;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -50,6 +53,7 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
     private  String grau, unidade, orientacao, tipo, ligado;
     private String strlatitude, strlongitude;
     private float velocidade;
+    private TextView longitude,latitude, velocimetro;
 
 
 
@@ -59,6 +63,11 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
+
+        longitude = (TextView)findViewById(R.id.longitude);
+        latitude = (TextView)findViewById(R.id.latitude);
+        velocimetro = (TextView)findViewById(R.id.velocidade);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -213,9 +222,6 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
             }
 
             //Seta no mapa a latitude , longitude e velocidade
-            TextView longitude = (TextView)findViewById(R.id.longitude);
-            TextView latitude = (TextView)findViewById(R.id.latitude);
-            TextView velocimetro = (TextView)findViewById(R.id.velocidade);
             longitude.setText("Latitude: " + strlatitude);
             latitude.setText("Longitude: " + strlongitude);
             velocimetro.setText("Velocidade: " + velocidade);
@@ -267,6 +273,17 @@ public class mapa extends FragmentActivity implements OnMapReadyCallback, Locati
 
     @Override
     public void onProviderDisabled(String provider) {
+        BitmapDrawable bitmapdraw =(BitmapDrawable)getResources().getDrawable(R.drawable.question);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 300, 300, false);
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(0.0, 0.0);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("GPS desligado!!").icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //Seta no mapa a latitude , longitude e velocidade
+        longitude.setText("GPS desligado");
+        latitude.setText("GPS desligado");
+        velocimetro.setText("GPS desligado");
     }
 
 
