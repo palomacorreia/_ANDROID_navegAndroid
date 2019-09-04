@@ -37,12 +37,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(mapa);
                 return true;
             case R.id.historico:
-                Intent hist = new Intent(MainActivity.this, MapsActivity.class);
+                Intent hist = new Intent(MainActivity.this, MapsLog.class);
                 startActivity(hist);
-                return true;
-            case R.id.List:
-                Intent list = new Intent(MainActivity.this, HistoricoLog.class);
-                startActivity(list);
                 return true;
             case R.id.sat:
                 Intent gnss = new Intent(MainActivity.this, TelaGNSS.class);

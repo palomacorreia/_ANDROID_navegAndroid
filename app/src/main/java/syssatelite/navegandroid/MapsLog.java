@@ -2,7 +2,6 @@ package syssatelite.navegandroid;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,38 +10,34 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
+public class MapsLog extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
     public GoogleMap mMap;
     public DatabaseReference mDatabase;
@@ -62,12 +57,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        //Carregando Bottom Navigation
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav_view);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+                switch (item.getItemId()) {
+                    case R.id.navigation_map:
+                        Intent a = new Intent(MapsLog.this, MapsLog.class);
+                        startActivity(a);
+                        break;
+
+                    case R.id.navigation_list:
+                        Intent b = new Intent(MapsLog.this,HistoricoLog.class);
+                        startActivity(b);
+                        break;
+                }
+                return false;
+            }
+        });
 
         //checando permissões
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(getApplication(), "Sem permissão!", Toast.LENGTH_LONG).show();
-            ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(MapsLog.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
 
@@ -106,7 +120,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //checando permissões
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(getApplication(), "Sem permissão!", Toast.LENGTH_LONG).show();
-            ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(MapsLog.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
 
@@ -141,8 +155,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     private void desenharLinha(ArrayList<LatLng> lista){
         //apaga todos os marcadores e polilinhas
-        mMap.clear();
-    System.out.println("entrei em desenhar");
+                mMap.clear();
         //inicializa a variável de ponto
         LatLng ponto = new LatLng(0,0);
 
@@ -165,50 +178,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();                   // Creates a CameraPosition from the builder
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        Toast.makeText(getApplication(), "Desenhou!", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplication(), "Desenhou!", Toast.LENGTH_LONG).show();
     }
 
 
-    private void getMarkers(){
-
-        mDatabase.child("location").addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //Get map of users in datasnapshot
-                        if (dataSnapshot.getValue() != null)
-                            getAllLocations((Map<String,Object>) dataSnapshot.getValue());
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        //handle databaseError
-                    }
-                });
-    }
-
-    private void getAllLocations(Map<String,Object> locations) {
-        for (Map.Entry<String, Object> entry : locations.entrySet()){
-
-            Date newDate = new Date(Long.valueOf(entry.getKey()));
-            Map singleLocation = (Map) entry.getValue();
-            LatLng latLng = new LatLng((Double) singleLocation.get("latitude"), (Double)singleLocation.get("longitude"));
-            addGreenMarker(newDate, latLng);
-
-        }
-
-
-    }
-
-    private void addGreenMarker(Date newDate, LatLng latLng) {
-        SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title(dt.format(newDate));
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        mMap.addMarker(markerOptions);
-    }
 
     @Override
     public void onResume() {
@@ -233,6 +206,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onProviderDisabled(String provider) {
-
+        Toast.makeText(getApplication(), "GPS desligado!", Toast.LENGTH_LONG).show();
+      //finish();
     }
+
+
 }

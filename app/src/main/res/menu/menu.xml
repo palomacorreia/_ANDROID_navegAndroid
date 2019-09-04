@@ -18,12 +18,6 @@
         android:icon="@android:drawable/ic_menu_preferences"
         android:showAsAction="withText"
         android:title="@string/historico" />
-    <item
-        android:id="@+id/List"
-        android:alphabeticShortcut="s"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:showAsAction="withText"
-        android:title="@string/list" />
 
     <item
         android:id="@+id/sat"

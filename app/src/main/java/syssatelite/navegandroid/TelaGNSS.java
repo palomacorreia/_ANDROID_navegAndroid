@@ -140,9 +140,8 @@ public class TelaGNSS extends AppCompatActivity implements LocationListener, Gps
 
     @Override
     public void onProviderDisabled(String provider) {
-        // O Location Provider foi desabilitado
-
-
+        Toast.makeText(getApplication(), "GPS desligado!", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

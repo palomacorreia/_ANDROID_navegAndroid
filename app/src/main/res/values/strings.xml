@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Sistema de Navegacao</string>
-    <string name="localizar">Localizar</string>
-    <string name="configurar">Configurar</string>
-    <string name="sat">Satélite</string>
-    <string name="sobre">Sobre</string>
+    <string name="app_name">Sistema de Navegação</string>
+    <string name="localizar"><b>Localizar</b></string>
+    <string name="configurar"><b>Configurações</b></string>
+    <string name="sat"><b>Satélite</b></string>
+    <string name="sobre"><b>Sobre</b></string>
     <string name="vetorial">Vetorial</string>
     <string name="ImagemSatelite">Imagem Satelite</string>
     <string name="graudecimal">Grau Decimal</string>

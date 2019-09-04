@@ -1,8 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mapa" />
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".mapa" />
+    <LinearLayout
+        android:id="@+id/validity"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white">
+        <TextView
+            android:id="@+id/longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sistema"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sistema"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/velocidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sistema"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+
+
+
+</FrameLayout>
